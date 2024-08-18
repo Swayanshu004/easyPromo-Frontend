@@ -20,14 +20,24 @@ function Hero() {
         className="text-7xl font-bold text-violet-700"
         words={["Influencers", "Brands"]}
         />
-        <Link href={"/register"}>        
-            <ShimmerButton 
-            className="shadow-2xl mt-5 cursor-auto">
-                <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
-                Register
-                </span>
-            </ShimmerButton>
-        </Link>
+        <div className='flex flex-col md:flex-row gap-5'>
+            <Link href={"/Creator/register"}>        
+                <ShimmerButton 
+                className="shadow-2xl mt-5 cursor-auto">
+                    <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
+                    Register Creator
+                    </span>
+                </ShimmerButton>
+            </Link>
+            <Link href={"/Brand/register"}>        
+                <ShimmerButton 
+                className="shadow-2xl mt-5 cursor-auto">
+                    <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
+                    Register Brand
+                    </span>
+                </ShimmerButton>
+            </Link>
+        </div>
     </div>
   )
 }
