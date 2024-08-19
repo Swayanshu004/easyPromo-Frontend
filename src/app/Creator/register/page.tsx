@@ -8,7 +8,7 @@ function page() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form submitted - ",e);
-};
+  };
 return (
 <div className="w-screen h-screen my-20 flex items-center justify-center">
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
