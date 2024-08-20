@@ -6,10 +6,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 function page() {
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log("Form submitted - ",e);
-    };
+  
   return (
     <div className='w-screen flex flex-col items-center gap-5 mt-20 '>
         <div className='w-5/6 h-auto my-10 lg:h-56 rounded-3xl flex flex-col gap-5 items-center justify-around lg:flex-row'>
@@ -42,17 +39,21 @@ function page() {
             </div>  
         </div>
         <div className='w-screen flex flex-col items-center'>
-        <form className="mb-10 lg:mb-36" onSubmit={handleSubmit}>
+        <form className="mb-10 lg:mb-36" action="http://localhost:7000/v1/creator/request/66c4e649958e324c0d5fec26" method='POST' encType="application/x-www-form-urlencoded">
             <LabelInputContainer className="mb-4">
             <Label htmlFor="note">Note*</Label>
-            <Input id="note" placeholder="example-ig.com" type="text" />
+            <Input
+            name= "note"
+            id='note'
+            placeholder="add note here" 
+            type="text" />
             </LabelInputContainer>
 
             <button
             className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
             type="submit"
             >
-            Register &rarr;
+            Request &rarr;
             <BottomGradient />
             </button>
         </form>

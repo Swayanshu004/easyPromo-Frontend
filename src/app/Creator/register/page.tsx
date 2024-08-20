@@ -1,13 +1,56 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 function page() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [data, setData] = useState({
+    name: "",
+    address: "",
+    instagramUrl: "",
+    youtubeUrl: "",
+    phoneNo: "",
+    category: "",
+    password: ""
+  })
+  let ele ;
+  const handleInput = (e: any) => {
+    ele = e.target;
+    console.log(ele.category);
+    setData({
+      ...data,
+      [ele.name]: ele.value
+    })
+  };
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("Form submitted - ",e);
+    // console.log("Form submitted - ",e);
+    try {
+      const response = await fetch(`http://localhost:7000/v1/creator/signin`,{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+      });
+      console.log("category - ",data.category);
+      console.log("response - ",response);
+      if(response.ok){
+        setData({
+          name: "",
+          address: "",
+          instagramUrl: "",
+          youtubeUrl: "",
+          phoneNo: "",
+          category: "",
+          password: ""
+        })
+      }
+    } catch (error) {
+      console.error("Some Error In Fetch",error);
+      
+    }
   };
 return (
 <div className="w-screen h-screen my-20 flex items-center justify-center">
@@ -22,47 +65,58 @@ return (
         star(*) marked fields are mandatory to fill
     </p>
 
-    <form className="my-8" onSubmit={handleSubmit}>
+    <form className="my-8" onSubmit={handleSubmit} action="http://localhost:7000/v1/creator/register" method="post" encType="multipart/form-data">
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
         <LabelInputContainer>
             <Label htmlFor="name">Name*</Label>
-            <Input id="name" placeholder="name" type="text" />
+            <Input name="name" onChange={handleInput} value={data.name} id="name" placeholder="name" type="text" />
         </LabelInputContainer>
         <LabelInputContainer>
             <Label htmlFor="address">Address*</Label>
-            <Input id="address" placeholder="wallet address" type="text" />
+            <Input name="address" onChange={handleInput} value={data.address} id="address" placeholder="wallet address" type="text" />
         </LabelInputContainer>
         </div>
         <LabelInputContainer className="mb-4">
-        <Label htmlFor="url1">Social-Media URL*</Label>
-        <Input id="url1" placeholder="example-ig.com" type="url" />
+        <Label htmlFor="instagramUrl">Social-Media URL*</Label>
+        <Input name="instagramUrl" onChange={handleInput} value={data.instagramUrl} id="instagramUrl" placeholder="example-ig.com" type="url" />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
-        <Label htmlFor="url2">Social-Media URL</Label>
-        <Input id="url2" placeholder="example-yt.com" type="url" />
+        <Label htmlFor="youtubeUrl">Social-Media URL</Label>
+        <Input name="youtubeUrl" onChange={handleInput} value={data.youtubeUrl} id="youtubeUrl" placeholder="example-yt.com" type="url" />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
-        <Label htmlFor="phNo">Phone No.</Label>
-        <Input id="phNo" placeholder="+91" type="text" />
+        <Label htmlFor="phoneNo">Phone No.</Label>
+        <Input name="phoneNo" onChange={handleInput} value={data.phoneNo} id="phoneNo" placeholder="+91" type="text" />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
         <Label htmlFor="category">Category*</Label>
-        <select name="category" id="category" className="flex h-10 w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-sm  file:border-0 file:bg-transparent 
+        <select 
+        name="category" 
+        onChange={handleInput} 
+        value={data.category} 
+        id="category" 
+        className="flex h-10 w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-sm  file:border-0 file:bg-transparent 
           file:text-sm file:font-medium placeholder:text-neutral-400 dark:placeholder-text-neutral-600 
           focus-visible:outline-none focus-visible:ring-[2px]  focus-visible:ring-violet-700 dark:focus-visible:ring-violet-700
            disabled:cursor-not-allowed disabled:opacity-50
            dark:shadow-[0px_0px_1px_1px_var(--neutral-700)]
            group-hover/input:shadow-none transition duration-400
            ">
-          <option value="">ans - 1</option>
-          <option value="">ans - 2</option>
-          <option value="">ans - 3</option>
-          <option value="">ans - 4</option>
+          <option disabled value="">Select a Catagory</option>
+          <option value="Lifestyle">Lifestyle</option>
+          <option value="Beauty">Beauty</option>
+          <option value="Fitness">Fitness</option>
+          <option value="Tech">Tech</option>
+          <option value="Travel">Travel</option>
+          <option value="Food">Food</option>
+          <option value="Gaming">Gaming</option>
+          <option value="Educational">Educational</option>
+          <option value="Parenting">Parenting</option>
         </select>
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
         <Label htmlFor="password">Password*</Label>
-        <Input id="password" placeholder="••• •••" type="password" />
+        <Input name="password" onChange={handleInput} value={data.password} id="password" placeholder="••• •••" type="password" />
         </LabelInputContainer>
 
         <button

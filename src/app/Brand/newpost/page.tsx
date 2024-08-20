@@ -5,10 +5,6 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 function page() {
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log("Form submitted - ",e);
-    };
   return (
     <div className="w-screen h-fit my-20 flex items-center justify-center">
     <div className="max-w-5/6 lg:w-2/5 mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black ">
@@ -21,26 +17,26 @@ function page() {
       <p className="text-sm font-semibold max-w-sm mt-5 text-neutral-600">
           star(*) marked fields are mandatory to fill
       </p>
-        <form className="my-8" onSubmit={handleSubmit}>
+        <form className="my-8" action="http://localhost:7000/v1/brand/newpost" method='POST' encType="multipart/form-data">
           <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>
               <Label htmlFor="title">Title*</Label>
-              <Input id="title" placeholder="title" type="text" />
+              <Input name="title" id="title" placeholder="title" type="text" />
           </LabelInputContainer>
           <LabelInputContainer>
               <Label htmlFor="price">Pricepoll*</Label>
               <div className='flex items-center gap-2'>
-                <Input id="price" placeholder="30 $" type="text" /><span className='py-2 px-3 rounded-lg border-2 bg-zinc-800 hover:border-violet-700'>$</span>
+                <Input name="price" id="price" placeholder="30 $" type="text" /><span className='py-2 px-3 rounded-lg border-2 bg-zinc-800 hover:border-violet-700'>$</span>
               </div>
           </LabelInputContainer>
           </div>
           <LabelInputContainer className="mb-4">
-          <Label htmlFor="url">URL*</Label>
-          <Input id="url" placeholder="product-url.com" type="url" />
+          <Label htmlFor="productUrl">URL*</Label>
+          <Input name="productUrl" id="url" placeholder="product-url.com" type="url" />
           </LabelInputContainer>
           <LabelInputContainer className="mb-4">
-          <Label htmlFor="banner">Banner*</Label>
-          <Input id="banner" type="file" />
+          <Label htmlFor="ImageUrl">Banner*</Label>
+          <Input name="ImageUrl" id="banner" type="file" />
           </LabelInputContainer>
           <LabelInputContainer className="mb-4">
           <Label htmlFor="category">Category*</Label>
@@ -51,49 +47,56 @@ function page() {
             dark:shadow-[0px_0px_1px_1px_var(--neutral-700)]
             group-hover/input:shadow-none transition duration-400
             ">
-            <option value="">ans - 1</option>
-            <option value="">ans - 2</option>
-            <option value="">ans - 3</option>
-            <option value="">ans - 4</option>
+              <option disabled value="">Select a Catagory</option>
+              <option value="Lifestyle">Lifestyle</option>
+              <option value="Beauty">Beauty</option>
+              <option value="Fitness">Fitness</option>
+              <option value="Tech">Tech</option>
+              <option value="Travel">Travel</option>
+              <option value="Food">Food</option>
+              <option value="Gaming">Gaming</option>
+              <option value="Educational">Educational</option>
+              <option value="Parenting">Parenting</option>
           </select>
           </LabelInputContainer>
           <LabelInputContainer className="mb-4">
-          <Label htmlFor="category">Type of Content*</Label>
-          <select name="category" id="category" className="flex h-10 w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-sm  file:border-0 file:bg-transparent 
+          <Label htmlFor="contentType">Type of Content*</Label>
+          <select name="contentType" id="category" className="flex h-10 w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-sm  file:border-0 file:bg-transparent 
             file:text-sm file:font-medium placeholder:text-neutral-400 dark:placeholder-text-neutral-600 
             focus-visible:outline-none focus-visible:ring-[2px]  focus-visible:ring-violet-700 dark:focus-visible:ring-violet-700
             disabled:cursor-not-allowed disabled:opacity-50
             dark:shadow-[0px_0px_1px_1px_var(--neutral-700)]
             group-hover/input:shadow-none transition duration-400
             ">
-            <option value="">Long (min 5min long)</option>
-            <option value="">Short (max 2min long)</option>
+            <option disabled value="">NA</option>
+            <option value="Long">Long (min 5min long)</option>
+            <option value="Short">Short (max 2min long)</option>
           </select>
           </LabelInputContainer>
           <LabelInputContainer className="mb-4">
-          <Label htmlFor="category">Type of Creator*</Label>
-          <select name="category" id="category" className="flex h-10 w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-sm  file:border-0 file:bg-transparent 
+          <Label htmlFor="creatorType">Type of Creator*</Label>
+          <select name="creatorType" id="category" className="flex h-10 w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-sm  file:border-0 file:bg-transparent 
             file:text-sm file:font-medium placeholder:text-neutral-400 dark:placeholder-text-neutral-600 
             focus-visible:outline-none focus-visible:ring-[2px]  focus-visible:ring-violet-700 dark:focus-visible:ring-violet-700
             disabled:cursor-not-allowed disabled:opacity-50
             dark:shadow-[0px_0px_1px_1px_var(--neutral-700)]
             group-hover/input:shadow-none transition duration-400
             ">
-            <option value="">Type - 1</option>
-            <option value="">Type - 2</option>
-            <option value="">Type - 3</option>
-            <option value="">Type - 4</option>
-          </select>
+              <option disabled value="">NA</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advance">Advance</option>
+            </select>
           </LabelInputContainer>
           <LabelInputContainer className="mb-4 flex">
           <label htmlFor="accept">
-          <input id="accept" type="checkbox" defaultChecked className='mr-2'/>
+          <input name="accept" id="accept" type="checkbox" defaultChecked className='mr-2'/>
           Auto accept*
           </label>
           </LabelInputContainer>
           <LabelInputContainer>
-              <Label htmlFor="desc">Description</Label>
-              <Input id="desc" placeholder="Describe your product" type="text" />
+              <Label htmlFor="description">Description</Label>
+              <Input name="description" id="desc" placeholder="Describe your product" type="text" />
           </LabelInputContainer>
 
           <button

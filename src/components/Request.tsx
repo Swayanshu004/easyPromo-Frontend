@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import Link from 'next/link'
 
@@ -6,6 +7,16 @@ function Request() {
         index: 1,
         Note: "Hii I'm a ig Creator.",
         CreatedBy: "Swaynshu",
+    }
+    async function handleClickUp() {
+        try {
+            const response = await fetch(`http://localhost:7000/v1/Brand/approve/66c4e649958e324c0d5fec26`,{
+              method: "POST",
+            });
+            console.log("response - ",response);
+          } catch (error) {
+            console.error("Some Error In Fetch",error);
+          }
     }
   return (
     <div className='w-5/6 h-auto my-3 py-2 rounded-xl bg-violet-300 flex items-center justify-between'>
@@ -18,7 +29,7 @@ function Request() {
             <Link href={"/"} className='w-1/3'>
                 <div className='w-full bg-red-500 rounded-2xl text-center py-1'>x</div>
             </Link>
-            <Link href={"/"} className='w-1/3'>
+            <Link href={"/"} onClick={handleClickUp} className='w-1/3'>
                 <div className='w-full bg-green-500 rounded-2xl text-center py-1'>✔</div>
             </Link>
         </div>
