@@ -24,8 +24,8 @@ function page() {
     })
   };
   const handleSubmit = async (e: any) => {
-    e.preventDefault();
     // console.log("Form submitted - ",e);
+    e.preventDefault();
     try {
       const response = await fetch(`http://localhost:7000/v1/creator/signin`,{
         method: "POST",
@@ -34,23 +34,24 @@ function page() {
         },
         body: JSON.stringify(data)
       });
-      console.log("category - ",data.category);
-      console.log("response - ",response);
       if(response.ok){
         setData({
-          name: "",
-          address: "",
-          instagramUrl: "",
-          youtubeUrl: "",
-          phoneNo: "",
-          category: "",
-          password: ""
-        })
+            name: "",
+            address: "",
+            instagramUrl: "",
+            youtubeUrl: "",
+            phoneNo: "",
+            category: "",
+            password: ""
+          })
+          const data = await response.json();
+          console.log("response - ",data);
+          localStorage.setItem('jwtToken',data.token);
+        }
+      } catch (error) {
+        console.error("Some Error In Fetch",error);
+        
       }
-    } catch (error) {
-      console.error("Some Error In Fetch",error);
-      
-    }
   };
 return (
 <div className="w-screen h-screen my-20 flex items-center justify-center">
@@ -65,7 +66,7 @@ return (
         star(*) marked fields are mandatory to fill
     </p>
 
-    <form className="my-8" onSubmit={handleSubmit} action="http://localhost:7000/v1/creator/register" method="post" encType="multipart/form-data">
+    <form className="my-8" onSubmit={handleSubmit}>
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
         <LabelInputContainer>
             <Label htmlFor="name">Name*</Label>

@@ -42,6 +42,9 @@ function page() {
           category: "",
           password: ""
         })
+        const data = await response.json();
+        console.log("response - ",data);
+        localStorage.setItem('jwtToken',data.token);
       }
     } catch (error) {
       console.error("Some Error In Fetch",error);
