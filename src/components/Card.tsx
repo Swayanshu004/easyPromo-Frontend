@@ -6,7 +6,7 @@ function Card(blogdata: any) {
     // console.log(blogdata.blogContent.ImageUrl);
   return (
     <div className="w-72 mt-5">
-      <Link href="/postId">
+      <Link href={`Creator/post/${blogdata.blogContent._id}`}>
         <div className="relative overflow-hidden h-fit rounded-2xl transition duration-200 group bg-white hover:shadow-xl border border-zinc-100">
           <div className="w-full aspect-w-16 aspect-h-10 rounded-tr-lg rounded-tl-lg overflow-hidden xl:aspect-w-16 xl:aspect-h-10 relative">
             <Image

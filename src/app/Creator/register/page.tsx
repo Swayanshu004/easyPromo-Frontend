@@ -17,7 +17,7 @@ function page() {
   let ele ;
   const handleInput = (e: any) => {
     ele = e.target;
-    console.log(ele.category);
+    // console.log(ele.category);
     setData({
       ...data,
       [ele.name]: ele.value
@@ -27,7 +27,7 @@ function page() {
     // console.log("Form submitted - ",e);
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:7000/v1/creator/signin`,{
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/creator/signin`,{
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +50,6 @@ function page() {
         }
       } catch (error) {
         console.error("Some Error In Fetch",error);
-        
       }
   };
 return (

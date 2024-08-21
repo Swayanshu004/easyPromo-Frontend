@@ -1,9 +1,32 @@
-import React from 'react'
+"use client"
+import React, {useState, useEffect} from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Card from '@/components/Card'
+import axios from 'axios'
 
 function page() {
+  // @ts-ignore
+  const [apidata1, setApidata1] = useState({});
+  const [apidata2, setApidata2] = useState([]);
+  useEffect(()=> {
+    axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/brand/profile`, {  
+      headers: { 
+        "authorization" : localStorage.getItem("jwtToken") 
+      }
+    })
+    .then(res => {
+      let creatorDetails = {};
+      // console.log("reached .then  - - - - - - - -");
+      const data = res.data; 
+      creatorDetails = data.creatorDetails[0];
+      setApidata1(creatorDetails);
+      setApidata2(data.requestFromCreator)
+      // console.log(requestFromCreator);
+      // setApidata([data.creatorDetails, ]);  
+    })
+    .catch(err => console.error(err));
+  },[])
   return (
     <div className='w-screen flex flex-col items-center gap-5 mt-20 '>
         <div className='w-5/6 h-5/6 mt-10 lg:h-56 rounded-3xl flex flex-col gap-5 items-center justify-around lg:flex-row'>

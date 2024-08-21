@@ -15,25 +15,23 @@ function page() {
   let ele ;
   const handleInput = (e: any) => {
     ele = e.target;
-    console.log(ele.category);
+    // console.log(ele.category);
     setData({
       ...data,
       [ele.name]: ele.value
     })
   };
   const handleSubmit = async (e: any) => {
-    e.preventDefault();
     // console.log("Form submitted - ",e);
-    console.log("category - ",data.category);
+    e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:7000/v1/Brand/signin`,{
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/brand/signin`,{
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data)
       });
-      console.log("response - ",response);
       if(response.ok){
         setData({
           name: "",
@@ -48,7 +46,6 @@ function page() {
       }
     } catch (error) {
       console.error("Some Error In Fetch",error);
-      
     }
   };
   return (
