@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react'
-import Card from '@/components/Card';
+import CardCreator from '@/components/CardCreator';
 require('dotenv').config()
 import axios from 'axios';
 
@@ -24,7 +24,7 @@ function page() {
     <div className='w-screen my-20'>
         <div className='w-full flex justify-center flex-wrap gap-3 lg:my-10'>
         {apidata.map(blogContent => (
-          <Card key={blogContent._id} blogContent={blogContent}/>
+          <CardCreator key={blogContent._id} blogContent={blogContent}/>
         ))}
         </div>
     </div>

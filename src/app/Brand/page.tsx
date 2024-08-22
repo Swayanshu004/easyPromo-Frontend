@@ -16,32 +16,29 @@ function page() {
       }
     })
     .then(res => {
-      let creatorDetails = {};
+      let brandDetails = {};
       // console.log("reached .then  - - - - - - - -");
       const data = res.data; 
-      creatorDetails = data.creatorDetails[0];
-      setApidata1(creatorDetails);
-      setApidata2(data.requestFromCreator)
-      // console.log(requestFromCreator);
-      // setApidata([data.creatorDetails, ]);  
+      
+      brandDetails = data.brandDetails[0];
+      setApidata1(brandDetails);
+      setApidata2(data.allPost) 
     })
     .catch(err => console.error(err));
   },[])
+  console.log(apidata1);
+  
   return (
     <div className='w-screen flex flex-col items-center gap-5 mt-20 '>
         <div className='w-5/6 h-5/6 mt-10 lg:h-56 rounded-3xl flex flex-col gap-5 items-center justify-around lg:flex-row'>
-            <Image src="/person.png" alt="na" width={1000} height={1000} className='w-1/5 rounded-full'></Image>
+            <Image src="/BrandLogo.png" alt="na" width={1000} height={1000} className='w-1/5 rounded-full'></Image>
             <div className='w-5/6 h-full p-10 text-sm bg-neutral-200 rounded-2xl flex flex-col items-center justify-between lg:items-start lg:flex-row'>
               <div>
-                <h2 className='text-neutral-500 font-semibold'>Name: <span className='text-black'>{blogContent.brand}</span>
+                <h2 className='text-neutral-500 font-semibold'>Name: <span className='text-black'>{apidata1.name}</span>
                 </h2>
-                <h2 className='text-neutral-500 font-semibold'>URL 1 : <span className='text-black'>demo.ig.com</span>
+                <h2 className='text-neutral-500 font-semibold'>URL 1 : <span className='text-black'>{apidata1.officialUrl}</span>
                 </h2>
-                <h2 className='text-neutral-500 font-semibold'>URL 2 : <span className='text-black'>demo.utube.com</span>
-                </h2>
-                <h2 className='text-neutral-500 font-semibold'>Phone No : <span className='text-black'>+91 ----- -----</span>
-                </h2>
-                <h2 className='text-neutral-500 font-semibold'>Category : <span className='text-black'>music</span>
+                <h2 className='text-neutral-500 font-semibold'>category : <span className='text-black'>{apidata1.category}</span>
                 </h2>
               </div>
               <div className='w-fit mt-5 lg:mt-0 flex flex-col items-start gap-5 h-full lg:flex-row'>
@@ -56,9 +53,17 @@ function page() {
             </div>  
         </div>
         <div className='w-2/3 flex flex-wrap gap-2 lg:my-10'>
-          <Card blogContent={blogContent}/>
-          <Card blogContent={blogContent}/>
-          <Card blogContent={blogContent}/>
+        {
+          apidata2.length === 0 ? 
+          <p className='w-full text-center bg-neutral-700 font-semibold text-xl text-violet-300 my-10 py-5 rounded-xl'>no post</p>:
+          <>
+          {
+            apidata2.map(blogContent => (
+              <Card key={blogContent._id} blogContent={blogContent}/>
+            ))
+          }
+          </>
+        }
         </div>
     </div>
   )

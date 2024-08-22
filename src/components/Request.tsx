@@ -6,17 +6,15 @@ function Request(data: any) {
   console.log("card component - ",data);
   
   const apidata = data.data;
-  const req = {
-    index: 1,
-    Note: "Hii I'm a ig Creator.",
-    CreatedBy: "Swaynshu",
-  }
   console.log(apidata);
   
     async function handleClickUp() {
         try {
-            const response = await fetch(`http://localhost:7000/v1/Brand/approve/66c4e649958e324c0d5fec26`,{
+            const response = await fetch(`http://localhost:7000/v1/brand/approve/${apidata.requestdOn}?creatorId=${apidata.createdBy}`,{
               method: "POST",
+              headers: { 
+                "authorization" : localStorage.getItem("jwtToken") 
+              }
             });
             console.log("response - ",response);
           } catch (error) {
@@ -33,7 +31,7 @@ function Request(data: any) {
             <Link href={"/"} className='w-1/3'>
                 <div className='w-full bg-red-500 rounded-2xl text-center py-1'>x</div>
             </Link>
-            <Link href={"/"} onClick={handleClickUp} className='w-1/3'>
+            <Link href={`/`} onClick={handleClickUp} className='w-1/3'>
                 <div className='w-full bg-green-500 rounded-2xl text-center py-1'>✔</div>
             </Link>
         </div>

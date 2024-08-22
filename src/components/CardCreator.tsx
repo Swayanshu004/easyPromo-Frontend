@@ -2,11 +2,11 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-function Card(blogdata: any) {
+function CardCreator(blogdata: any) {
     console.log("Card - ",blogdata);
   return (
     <div className="w-72 mt-5">
-      <Link href={`Brand/post/${blogdata.blogContent._id}`}>
+      <Link href={`Creator/post/${blogdata.blogContent._id}`}>
         <div className="relative overflow-hidden h-fit rounded-2xl transition duration-200 group bg-white hover:shadow-xl border border-zinc-100">
           <div className="w-full aspect-w-16 aspect-h-10 rounded-tr-lg rounded-tl-lg overflow-hidden xl:aspect-w-16 xl:aspect-h-10 relative">
             <Image
@@ -34,4 +34,4 @@ function Card(blogdata: any) {
   )
 }
 
-export default Card
+export default CardCreator
