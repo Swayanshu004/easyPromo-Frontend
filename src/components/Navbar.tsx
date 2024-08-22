@@ -7,9 +7,9 @@ function Navbar() {
         <Link href={"/"}>
         <h1  className="text-4xl font-bold text-violet-700">ezPROMO</h1>
         </Link>
-        <Link href={"/auto"}>        
+        <Link href={"/Github"}>        
             <button className='bg-neutral-300 px-5 py-2 font-bold dark:text-black rounded-3xl w-[130px] hover:bg-violet-700 hover:text-white'>
-                Add Wallet
+                Github
             </button>
         </Link>
     </div>

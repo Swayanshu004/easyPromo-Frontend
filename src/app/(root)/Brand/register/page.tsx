@@ -3,8 +3,14 @@ import React, { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import {
+  WalletMultiButton,
+  WalletDisconnectButton
+} from '@solana/wallet-adapter-react-ui';
+import { useWallet } from "@solana/wallet-adapter-react";
 
 function page() {
+  const { publicKey } = useWallet();
   const [data, setData] = useState({
     name: "",
     address: "",
@@ -61,15 +67,16 @@ function page() {
             star(*) marked fields are mandatory to fill
         </p>
           <form className="my-8" onSubmit={handleSubmit}>
-            <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
+            <div className="flex flex-col items-end md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
             <LabelInputContainer>
                 <Label htmlFor="name">Name*</Label>
                 <Input name="name" onChange={handleInput} value={data.name} id="name" placeholder="name" type="text" />
             </LabelInputContainer>
-            <LabelInputContainer>
-                <Label htmlFor="address">Address*</Label>
-                <Input name="address" onChange={handleInput} value={data.address} id="address" placeholder="wallet address" type="text" />
-            </LabelInputContainer>
+            <div className="w-4/5">
+              {
+                publicKey ? <WalletDisconnectButton /> : <WalletMultiButton />
+              }
+            </div>
             </div>
             <LabelInputContainer className="mb-4">
             <Label htmlFor="officialUrl">Official URL*</Label>

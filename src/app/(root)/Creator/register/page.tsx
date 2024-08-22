@@ -3,21 +3,26 @@ import React, { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import {
+  WalletMultiButton,
+  WalletDisconnectButton
+} from '@solana/wallet-adapter-react-ui';
+import { useWallet } from "@solana/wallet-adapter-react";
 
 function page() {
+  const { publicKey, signMessage } = useWallet();
+
   const [data, setData] = useState({
     name: "",
-    address: "",
     instagramUrl: "",
     youtubeUrl: "",
     phoneNo: "",
     category: "",
-    password: ""
+    password: "",
   })
   let ele ;
   const handleInput = (e: any) => {
     ele = e.target;
-    // console.log(ele.category);
     setData({
       ...data,
       [ele.name]: ele.value
@@ -26,23 +31,33 @@ function page() {
   const handleSubmit = async (e: any) => {
     // console.log("Form submitted - ",e);
     e.preventDefault();
+    if (!publicKey) {
+      return;
+    }
+    const message = new TextEncoder().encode("Sign into easyPROMO");
+    const signature = await signMessage?.(message);
+    console.log(signature);
+    console.log(publicKey?.toString());
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/creator/signin`,{
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({
+          ...data,
+          publicKey: publicKey?.toString(),
+          signature,
+        })
       });
       if(response.ok){
         setData({
             name: "",
-            address: "",
             instagramUrl: "",
             youtubeUrl: "",
             phoneNo: "",
             category: "",
-            password: ""
+            password: "",
           })
           const data = await response.json();
           console.log("response - ",data);
@@ -66,15 +81,16 @@ return (
     </p>
 
     <form className="my-8" onSubmit={handleSubmit}>
-        <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
+        <div className="flex flex-col items-end md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
         <LabelInputContainer>
             <Label htmlFor="name">Name*</Label>
             <Input name="name" onChange={handleInput} value={data.name} id="name" placeholder="name" type="text" />
         </LabelInputContainer>
-        <LabelInputContainer>
-            <Label htmlFor="address">Address*</Label>
-            <Input name="address" onChange={handleInput} value={data.address} id="address" placeholder="wallet address" type="text" />
-        </LabelInputContainer>
+        <div className="w-4/5">
+          {
+            publicKey ? <WalletDisconnectButton /> : <WalletMultiButton />
+          }
+        </div>
         </div>
         <LabelInputContainer className="mb-4">
         <Label htmlFor="instagramUrl">Social-Media URL*</Label>
@@ -118,7 +134,6 @@ return (
         <Label htmlFor="password">Password*</Label>
         <Input name="password" onChange={handleInput} value={data.password} id="password" placeholder="••• •••" type="password" />
         </LabelInputContainer>
-
         <button
         className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
         type="submit"
