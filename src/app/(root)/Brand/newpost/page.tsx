@@ -17,7 +17,7 @@ function page() {
         SystemProgram.transfer({
             fromPubkey: publicKey!,
             toPubkey: new PublicKey("9Gs68NSs68PPNtKaDYiposrzY3ecyqMvVNrUHXJnJj32"),
-            lamports: 10000000,
+            lamports: 1000000,
         })
     );
 
@@ -126,36 +126,28 @@ function page() {
               <Label htmlFor="description">Description</Label>
               <Input name="description" id="desc" placeholder="Describe your product" type="text" />
           </LabelInputContainer>
-
+          <LabelInputContainer>
+              <Label htmlFor="txSignature">txSignature</Label>
+              <Input name="txSignature" id="txSignature" value={txSignature} placeholder="signature" type="text" readOnly/>
+          </LabelInputContainer>
+          <h3 className='font-light text-sm mt-1 text-neutral-500'>will get filled autotically after you do payment</h3>  
           {
             txSignature ?
-            <div className='w-full flex flex-col items-center gap-2 mt-5'>
-              <div className='flex'>
-              <h3 className='font-semibold text-neutral-200'>txSignature : </h3>  
-              <input 
-              disabled 
-              name="txSignature" 
-              id="txSignature" 
-              value={txSignature} 
-              type="text" 
-              className='w-fit text-center bg-transparent text-neutral-500' />
-              </div>
               <button
               className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-violet-500 rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
               type='submit'
               >
               Submit &rarr;
               <BottomGradient />
+              </button> :
+              <button
+              className=" mt-5 bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+              onClick={makePayment}
+              type='button'
+              >
+              pay {amount} Sol
+              <BottomGradient />
               </button>
-            </div> :
-            <button
-            className=" mt-5 bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-            onClick={makePayment}
-            type='button'
-            >
-            pay {amount} Sol
-            <BottomGradient />
-            </button>
           }
           
         </form>
