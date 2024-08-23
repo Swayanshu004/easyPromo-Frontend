@@ -10,7 +10,7 @@ import {
 import { useWallet } from "@solana/wallet-adapter-react";
 
 function page() {
-  const { publicKey } = useWallet();
+  const { publicKey, signMessage } = useWallet();
   const [data, setData] = useState({
     name: "",
     address: "",
@@ -30,13 +30,24 @@ function page() {
   const handleSubmit = async (e: any) => {
     // console.log("Form submitted - ",e);
     e.preventDefault();
+    if (!publicKey) {
+      return;
+    }
+    const message = new TextEncoder().encode("Sign into easyPROMO");
+    const signature = await signMessage?.(message);
+    console.log(signature);
+    console.log(publicKey?.toString());
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/brand/signin`,{
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({
+          ...data,
+          publicKey: publicKey?.toString(),
+          signature,
+        })
       });
       if(response.ok){
         setData({

@@ -1,10 +1,38 @@
 "use client";
-import React from 'react'
+import React, { useState } from 'react'
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
+import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 
 function page() {
+  const [amount, setAmount] = useState(0);
+  const [txSignature, setTxSignature] = useState("");
+  const { publicKey, sendTransaction } = useWallet();
+  const { connection } = useConnection();
+
+  async function makePayment() {
+    const transaction = new Transaction().add(
+        SystemProgram.transfer({
+            fromPubkey: publicKey!,
+            toPubkey: new PublicKey("9Gs68NSs68PPNtKaDYiposrzY3ecyqMvVNrUHXJnJj32"),
+            lamports: 10000000,
+        })
+    );
+
+    const {
+        context: { slot: minContextSlot },
+        value: { blockhash, lastValidBlockHeight }
+    } = await connection.getLatestBlockhashAndContext();
+
+    const signature = await sendTransaction(transaction, connection, { minContextSlot });
+
+    await connection.confirmTransaction({ blockhash, lastValidBlockHeight, signature });
+    setTxSignature(signature);
+    console.log(signature);
+    
+  } 
   return (
     <div className="w-screen h-fit my-20 flex items-center justify-center">
     <div className="max-w-5/6 lg:w-2/5 mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black ">
@@ -24,9 +52,9 @@ function page() {
               <Input name="title" id="title" placeholder="title" type="text" />
           </LabelInputContainer>
           <LabelInputContainer>
-              <Label htmlFor="price">Pricepoll*</Label>
+              <Label htmlFor="price">Price*</Label>
               <div className='flex items-center gap-2'>
-                <Input name="price" id="price" placeholder="30 $" type="text" /><span className='py-2 px-3 rounded-lg border-2 bg-zinc-800 hover:border-violet-700'>$</span>
+                <Input onChange={(e) => setAmount(e.target.value)} name="price" id="price" placeholder="0.00" type="number" step={0.001} /><span className='py-2 px-3 rounded-lg border-2 bg-zinc-800 hover:border-violet-700'>Sol</span>
               </div>
           </LabelInputContainer>
           </div>
@@ -99,13 +127,37 @@ function page() {
               <Input name="description" id="desc" placeholder="Describe your product" type="text" />
           </LabelInputContainer>
 
-          <button
-          className=" mt-5 bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-          type="submit"
-          >
-          Register &rarr;
-          <BottomGradient />
-          </button>
+          {
+            txSignature ?
+            <div className='w-full flex flex-col items-center gap-2 mt-5'>
+              <div className='flex'>
+              <h3 className='font-semibold text-neutral-200'>txSignature : </h3>  
+              <input 
+              disabled 
+              name="txSignature" 
+              id="txSignature" 
+              value={txSignature} 
+              type="text" 
+              className='w-fit text-center bg-transparent text-neutral-500' />
+              </div>
+              <button
+              className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-violet-500 rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+              type='submit'
+              >
+              Submit &rarr;
+              <BottomGradient />
+              </button>
+            </div> :
+            <button
+            className=" mt-5 bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+            onClick={makePayment}
+            type='button'
+            >
+            pay {amount} Sol
+            <BottomGradient />
+            </button>
+          }
+          
         </form>
     </div>
     </div>
