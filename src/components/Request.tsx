@@ -31,9 +31,9 @@ function Request(data: any) {
             <Link href={"/"} className='w-1/3'>
                 <div className='w-full bg-red-500 rounded-2xl text-center py-1'>x</div>
             </Link>
-            <Link href={`/`} onClick={handleClickUp} className='w-1/3'>
+            <button onClick={handleClickUp} className='w-1/3'>
                 <div className='w-full bg-green-500 rounded-2xl text-center py-1'>✔</div>
-            </Link>
+            </button>
         </div>
     </div>
   )

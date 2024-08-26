@@ -34,7 +34,7 @@ function page() {
     if (!publicKey) {
       return;
     }
-    const message = new TextEncoder().encode("Sign into easyPROMO");
+    const message = new TextEncoder().encode("Sign into easyPROMO-CREATOR");
     const signature = await signMessage?.(message);
     console.log(signature);
     console.log(publicKey?.toString());

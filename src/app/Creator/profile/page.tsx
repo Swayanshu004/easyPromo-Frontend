@@ -50,11 +50,11 @@ function page() {
               <div className='w-fit mt-5 lg:mt-0 flex flex-col items-start gap-5 h-full lg:flex-row'>
                 <div className='w-full lg:w-fit h-full p-5 bg-gray-600 text-md text-neutral-300 font-semibold rounded-xl'>Pending Amount : 
                 <br />
-                <span className='text-white text-4xl'>{apidata1.pendingAmount} $</span>
+                <span className='text-white text-4xl'>{apidata1.pendingAmount} SOL</span>
                 </div>
                 <div className='w-full lg:w-fit h-full p-5 bg-gray-600 text-md text-neutral-300 font-semibold rounded-xl'>Balance : 
                 <br />
-                <span className='text-white text-4xl'>{apidata1.balance} $</span>
+                <span className='text-white text-4xl'>{apidata1.balance} SOL</span>
                 <br />
                 <Link href={"/payout"}><button className='bottom-4 bg-green-600 px-5 py-2 rounded-lg mt-5 hover:bg-neutral-900'>Withdraw</button></Link>
                 </div>

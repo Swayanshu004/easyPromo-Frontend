@@ -7,17 +7,19 @@ import { PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
 import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 
 function page() {
-  const [amount, setAmount] = useState(0);
+  const [amountInSol, setAmountInSol] = useState(0);
   const [txSignature, setTxSignature] = useState("");
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
-
+  const brandJwt = localStorage.getItem("jwtToken");
+  
   async function makePayment() {
+    const amountInLamport = amountInSol * 1_000_000_000;
     const transaction = new Transaction().add(
         SystemProgram.transfer({
             fromPubkey: publicKey!,
-            toPubkey: new PublicKey("9Gs68NSs68PPNtKaDYiposrzY3ecyqMvVNrUHXJnJj32"),
-            lamports: 1000000,
+            toPubkey: new PublicKey("BRYahf1pXnbg8Dtxu1jCaXPKkT2Bm9TCPXzJGNCLVSMf"),
+            lamports: amountInLamport,
         })
     );
 
@@ -29,6 +31,9 @@ function page() {
     const signature = await sendTransaction(transaction, connection, { minContextSlot });
 
     await connection.confirmTransaction({ blockhash, lastValidBlockHeight, signature });
+    setTimeout(
+      ()=>console.log("verifying . . .")
+    , 7000)
     setTxSignature(signature);
     console.log(signature);
     
@@ -45,7 +50,7 @@ function page() {
       <p className="text-sm font-semibold max-w-sm mt-5 text-neutral-600">
           star(*) marked fields are mandatory to fill
       </p>
-        <form className="my-8" action="http://localhost:7000/v1/brand/newpost" method='POST' encType="multipart/form-data">
+        <form className="my-8" action={`http://localhost:7000/v1/brand/newpost/?brandJwt=${brandJwt}`} method='POST' encType="multipart/form-data">
           <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>
               <Label htmlFor="title">Title*</Label>
@@ -54,7 +59,7 @@ function page() {
           <LabelInputContainer>
               <Label htmlFor="price">Price*</Label>
               <div className='flex items-center gap-2'>
-                <Input onChange={(e) => setAmount(e.target.value)} name="price" id="price" placeholder="0.00" type="number" step={0.001} /><span className='py-2 px-3 rounded-lg border-2 bg-zinc-800 hover:border-violet-700'>Sol</span>
+                <Input onChange={(e) => setAmountInSol(e.target.value)} name="price" id="price" placeholder="0.00" type="number" step={0.001} /><span className='py-2 px-3 rounded-lg border-2 bg-zinc-800 hover:border-violet-700'>SOL</span>
               </div>
           </LabelInputContainer>
           </div>
@@ -122,7 +127,7 @@ function page() {
           Auto accept*
           </label>
           </LabelInputContainer>
-          <LabelInputContainer>
+          <LabelInputContainer className="mb-4">
               <Label htmlFor="description">Description</Label>
               <Input name="description" id="desc" placeholder="Describe your product" type="text" />
           </LabelInputContainer>
@@ -130,22 +135,22 @@ function page() {
               <Label htmlFor="txSignature">txSignature</Label>
               <Input name="txSignature" id="txSignature" value={txSignature} placeholder="signature" type="text" readOnly/>
           </LabelInputContainer>
-          <h3 className='font-light text-sm mt-1 text-neutral-500'>will get filled autotically after you do payment</h3>  
+          <h3 className='font-semibold text-sm mt-1 text-neutral-600'>will get filled autotically after the payment succeed <br/>- wait untill verification</h3>  
           {
             txSignature ?
               <button
-              className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-violet-500 rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+              className="mt-5 bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-violet-500 rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
               type='submit'
               >
               Submit &rarr;
               <BottomGradient />
               </button> :
               <button
-              className=" mt-5 bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+              className="mt-5 bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
               onClick={makePayment}
               type='button'
               >
-              pay {amount} Sol
+              pay {amountInSol} Sol
               <BottomGradient />
               </button>
           }

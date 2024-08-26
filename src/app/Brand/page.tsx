@@ -42,10 +42,6 @@ function page() {
                 </h2>
               </div>
               <div className='w-fit mt-5 lg:mt-0 flex flex-col items-start gap-5 h-full lg:flex-row'>
-                <div className='w-full lg:w-fit h-full p-5 bg-gray-600 text-md text-neutral-300 font-semibold rounded-xl'>Balance : 
-                <br />
-                <span className='w-fit text-white text-4xl'>196$</span>
-                </div>
                 <Link href={"Brand/newpost"}>
                   <div className='w-full h-full p-12 flex items-center justify-center bg-gray-600 hover:bg-gray-700 text-5xl text-neutral-300 font-light rounded-xl '>+</div>
                 </Link>
@@ -68,12 +64,5 @@ function page() {
     </div>
   )
 }
-
-const blogContent = {
-  brand: "apple",
-  title: "Amazing Watch With Sports Mode",
-  image: "/startframe__xspkedg7rsiu_xlarge.jpg",
-  price: 50
-};
 
 export default page

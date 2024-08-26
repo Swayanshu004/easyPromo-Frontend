@@ -50,7 +50,7 @@ function page({params}: {params:{ postId: string};}) {
               <div className='w-fit mt-5 lg:mt-0 flex flex-col items-start gap-5 h-full lg:flex-row'>
                 <div className='w-full min-w-32 lg:w-fit h-full p-5 bg-violet-700 text-md text-neutral-300 font-semibold rounded-xl'>PricePoll : 
                 <br />
-                <span className='text-white text-4xl '>{apidata1.price} $</span>
+                <span className='text-white text-4xl '>{apidata1.price} SOL</span>
                 </div>
               </div>
             </div>  
