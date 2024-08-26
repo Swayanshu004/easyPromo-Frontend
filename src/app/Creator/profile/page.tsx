@@ -56,11 +56,11 @@ function page() {
                 <br />
                 <span className='text-white text-4xl'>{apidata1.balance} SOL</span>
                 <br />
-                <Link href={"/payout"}><button className='bottom-4 bg-green-600 px-5 py-2 rounded-lg mt-5 hover:bg-neutral-900'>Withdraw</button></Link>
                 </div>
               </div>
             </div>  
         </div>
+        <Link href={"/Creator"}><button className='bottom-4 bg-green-600 px-5 py-2 rounded-lg mt-5 hover:bg-neutral-900'>ALLPOST</button></Link>
         <div className='w-2/3 flex items-center justify-center'>
         {
           apidata2.length === 0 ? 

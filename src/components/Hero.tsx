@@ -21,22 +21,22 @@ function Hero() {
         words={["Influencers", "Brands"]}
         />
         <div className='flex flex-col md:flex-row gap-5'>
-            <Link href={"/Creator/register"}>        
+            <a href={"/Creator/register"}>        
                 <ShimmerButton 
                 className="shadow-2xl mt-5 cursor-auto">
                     <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
                     Register Creator
                     </span>
                 </ShimmerButton>
-            </Link>
-            <Link href={"/Brand/register"}>        
+            </a>
+            <a href={"/Brand/register"}>        
                 <ShimmerButton 
                 className="shadow-2xl mt-5 cursor-auto">
                     <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
                     Register Brand
                     </span>
                 </ShimmerButton>
-            </Link>
+            </a>
         </div>
     </div>
   )

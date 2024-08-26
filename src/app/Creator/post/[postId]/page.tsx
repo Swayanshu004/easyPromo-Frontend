@@ -17,7 +17,7 @@ function page({params}: {params:{ postId: string};}) {
       }
     })
     .then(res => {
-      console.log(".then reached - - - - - - - -");    
+      // console.log(".then reached - - - - - - - -");    
       setApidata(res.data[0])}    
     )
     .catch(err => console.error(err));
