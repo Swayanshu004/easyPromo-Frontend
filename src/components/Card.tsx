@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 function Card(blogdata: any) {
-    console.log("Card - ",blogdata);
+    // console.log("Card - ",blogdata);
   return (
     <div className="w-72 mt-5">
       <Link href={`Brand/post/${blogdata.blogContent._id}`}>

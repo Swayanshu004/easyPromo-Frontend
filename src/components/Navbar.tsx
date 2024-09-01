@@ -4,13 +4,13 @@ import Link from 'next/link'
 
 function Navbar() {
   const [currentPath, setCurrentPath] = useState("");
-  const [pathname, setPathname] = useState(window.location.pathname);
+  const [pathname, setPathname] = useState("");
   let route = pathname.split('/')
   ;
   useEffect(()=>{
     setCurrentPath(window.location.origin);
     setPathname(window.location.pathname);
-  }, [window.location])
+  }, [])
   
   return (
     <div className='w-screen fixed z-20 px-10 py-5 top-0 flex items-center justify-between bg-gradient-to-b from-neutral-900 to-transparent'>

@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import axios from 'axios';
 
-function page({params}: {params:{ postId: string};}) {
+function page({params}) {
   // @ts-ignore
   const [apidata, setApidata] = useState([]);
   
@@ -16,30 +16,27 @@ function page({params}: {params:{ postId: string};}) {
         "authorization" : localStorage.getItem("jwtToken") 
       }
     })
-    .then(res => {
-      // console.log(".then reached - - - - - - - -");    
+    .then(res => {   
       setApidata(res.data[0])}    
     )
     .catch(err => console.error(err));
   },[])
-  // console.log("appdata - ",apidata)
 
   //form submit
   const [data, setData] = useState({
     note: "",
   })
   let ele ;
-  const handleInput = (e: any) => {
+  const handleInput = (e) => {
     ele = e.target;
-    console.log(ele.category);
+    // console.log(ele.category);
     setData({
       ...data,
       [ele.name]: ele.value
     })
   };
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("Form submitted - ",e);
     try {
       const response = await fetch(`http://localhost:7000/v1/creator/request/${apidata._id}`,{
         method: "POST",
@@ -54,7 +51,6 @@ function page({params}: {params:{ postId: string};}) {
         setData({
           note: ""
         })
-        console.log(response);
         
       }
     } catch (error) {
@@ -130,9 +126,6 @@ const BottomGradient = () => {
 const LabelInputContainer = ({
     children,
     className,
-  }: {
-    children: React.ReactNode;
-    className?: string;
   }) => {
     return (
       <div className={cn("flex flex-col space-y-2 w-full", className)}>

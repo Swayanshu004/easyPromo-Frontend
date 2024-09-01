@@ -13,13 +13,12 @@ function page() {
         "authorization" : localStorage.getItem("jwtToken") 
       }
     })
-    .then(res => {
-      console.log(".then reached - - - - - - - -");    
+    .then(res => {    
       setApidata(res.data)}    
     )
     .catch(err => console.error(err));
   },[])
-  console.log(" - - ",apidata)
+  // console.log(" - - ",apidata)
   return (
     <div className='w-screen my-20'>
         <div className='w-full flex justify-center flex-wrap gap-3 lg:my-10'>

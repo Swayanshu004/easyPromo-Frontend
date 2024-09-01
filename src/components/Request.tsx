@@ -1,22 +1,20 @@
 "use client"
 import React from 'react'
 import Link from 'next/link'
+import axios from 'axios';
 
 function Request(data: any) {
-  console.log("card component - ",data);
-  
+  // console.log("card component - ",data);
   const apidata = data.data;
-  console.log(apidata);
   
     async function handleClickUp() {
         try {
-            const response = await fetch(`http://localhost:7000/v1/brand/approve/${apidata.requestdOn}?creatorId=${apidata.createdBy}`,{
-              method: "POST",
+            const response = await axios.post(`http://localhost:7000/v1/brand/approve/${apidata.requestdOn}?creatorId=${apidata.createdBy}`,{
               headers: { 
-                "authorization" : localStorage.getItem("jwtToken") 
+                authorization : localStorage.getItem("jwtToken") 
               }
             });
-            console.log("response - ",response);
+            // console.log("response - ",response);
           } catch (error) {
             console.error("Some Error In Fetch",error);
           }

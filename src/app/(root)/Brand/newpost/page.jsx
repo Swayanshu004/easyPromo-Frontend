@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -12,13 +12,15 @@ function page() {
   const [txSignature, setTxSignature] = useState("");
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
-  const brandJwt = localStorage.getItem("jwtToken");
-  
+  const [brandJwt, setBrandJwt] = useState(null);
+  useEffect(()=>{
+    setBrandJwt(localStorage.getItem("jwtToken"))
+  },[])
   async function makePayment() {
     const amountInLamport = amountInSol * 1_000_000_000;
     const transaction = new Transaction().add(
         SystemProgram.transfer({
-            fromPubkey: publicKey!,
+            fromPubkey: publicKey,
             toPubkey: new PublicKey("BRYahf1pXnbg8Dtxu1jCaXPKkT2Bm9TCPXzJGNCLVSMf"),
             lamports: amountInLamport,
         })
@@ -175,9 +177,6 @@ const BottomGradient = () => {
 const LabelInputContainer = ({
     children,
     className,
-  }: {
-    children: React.ReactNode;
-    className?: string;
   }) => {
     return (
       <div className={cn("flex flex-col space-y-2 w-full", className)}>

@@ -8,7 +8,7 @@ import RequestCreator from '@/components/RequestCreator';
 
 function page() {
   // @ts-ignore
-  const [apidata1, setApidata1] = useState({});
+  const [apidata1, setApidata1] = useState<any>({});
   const [apidata2, setApidata2] = useState([]);
   useEffect(()=> {
     axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/creator/profile`, {  
@@ -22,14 +22,10 @@ function page() {
       const data = res.data; 
       creatorDetails = data.creatorDetails[0];
       setApidata1(creatorDetails);
-      setApidata2(data.requestFromCreator)
-      // console.log(requestFromCreator);
-      // setApidata([data.creatorDetails, ]);  
+      setApidata2(data.requestFromCreator);
     })
     .catch(err => console.error(err));
   },[])
-
-  console.log("appdata - ",apidata1)
   return (
     <div className='w-screen flex flex-col justify-center items-center gap-5 mt-20 '>
         <div className='w-5/6 h-5/6 mt-10 lg:h-56 rounded-3xl flex flex-col gap-5 items-center justify-around lg:flex-row'>
@@ -66,7 +62,7 @@ function page() {
           apidata2.length === 0 ? 
             <p className='w-full text-center bg-neutral-700 font-semibold text-xl text-violet-300 my-10 py-5 rounded-xl'>no request</p> :
             <>
-              {apidata2.map(content => (
+              {apidata2.map((content:any) => (
                 <RequestCreator key={content._id} data={content}/>
               ))}
             </>

@@ -36,8 +36,8 @@ function page() {
     }
     const message = new TextEncoder().encode("Sign into easyPROMO");
     const signature = await signMessage?.(message);
-    console.log(signature);
-    console.log(publicKey?.toString());
+    // console.log(signature);
+    // console.log(publicKey?.toString());
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/brand/signin`,{
         method: "POST",
@@ -59,7 +59,6 @@ function page() {
           password: ""
         })
         const data = await response.json();
-        console.log("response - ",data);
         localStorage.setItem('jwtToken',data.token);
       }
     } catch (error) {

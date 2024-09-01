@@ -6,8 +6,7 @@ import Card from '@/components/Card'
 import axios from 'axios'
 
 function page() {
-  // @ts-ignore
-  const [apidata1, setApidata1] = useState({});
+  const [apidata1, setApidata1] = useState<any>({});
   const [apidata2, setApidata2] = useState([]);
   useEffect(()=> {
     axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/brand/profile`, {  
@@ -19,14 +18,12 @@ function page() {
       let brandDetails = {};
       // console.log("reached .then  - - - - - - - -");
       const data = res.data; 
-      
       brandDetails = data.brandDetails[0];
       setApidata1(brandDetails);
       setApidata2(data.allPost) 
     })
     .catch(err => console.error(err));
   },[])
-  console.log(apidata1);
   
   return (
     <div className='w-screen flex flex-col items-center gap-5 mt-20 '>
@@ -54,7 +51,7 @@ function page() {
           <p className='w-full text-center bg-neutral-700 font-semibold text-xl text-violet-300 my-10 py-5 rounded-xl'>no post</p>:
           <>
           {
-            apidata2.map(blogContent => (
+            apidata2.map((blogContent:any) => (
               <Card key={blogContent._id} blogContent={blogContent}/>
             ))
           }

@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/ui/floating-dock.tsx", "src/app/(root)/Brand/newpost/page.jsx", "src/app/Brand/post/[postId]/page.tsx", "src/app/Brand/profile/page.tsx", "src/app/Creator/page.jsx", "src/app/Creator/post/[postId]/page.jsx", "src/app/Creator/profile/page.tjsx", "src/components/Navbar.tsx"],
   "exclude": ["node_modules"]
 }
