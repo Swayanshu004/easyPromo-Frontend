@@ -5,6 +5,8 @@ import Link from 'next/link'
 import Card from '@/components/Card'
 import axios from 'axios'
 
+axios.defaults.withCredentials = true; 
+
 function page() {
   const [apidata1, setApidata1] = useState<any>({});
   const [apidata2, setApidata2] = useState([]);
