@@ -6,6 +6,7 @@ import Request from '@/components/Request';
 import axios from 'axios';
 import RequestCreator from '@/components/RequestCreator';
 
+axios.defaults.withCredentials = true; 
 function page() {
   // @ts-ignore
   const [apidata1, setApidata1] = useState<any>({});
